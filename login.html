@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - MGG Generator</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@300;500;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="matrix-bg"></div>
+    
+    <div class="login-container">
+        <div class="login-card">
+            <div class="logo-section">
+                <img src="assets/logo.png" alt="MGG" class="logo-img">
+                <h1>MGG TERMINAL</h1>
+                <p>Authorized Access Only</p>
+            </div>
+            
+            <form class="login-form" id="loginForm">
+                <div class="input-group">
+                    <label>Email / No. HP</label>
+                    <div class="input-wrapper">
+                        <i class="fas fa-user"></i>
+                        <input type="text" id="username" placeholder="user@example.com / 08123456789" required>
+                    </div>
+                </div>
+                
+                <div class="input-group">
+                    <label>Password</label>
+                    <div class="input-wrapper">
+                        <i class="fas fa-lock"></i>
+                        <input type="password" id="password" placeholder="****************" required>
+                    </div>
+                </div>
+                
+                <button type="submit" class="btn-login btn-glow">
+                    <span class="btn-text">AUTHENTICATE</span>
+                    <div class="btn-loader" id="btnLoader"></div>
+                </button>
+            </form>
+            
+            <div class="login-status" id="loginStatus"></div>
+        </div>
+        
+        <div class="terminal-aside">
+            <div class="terminal-preview">
+                <div class="terminal-header">
+                    <span>auth@terminal:~$</span>
+                </div>
+                <div class="terminal-body">
+                    <div class="code-line">user_auth_module loaded ✓</div>
+                    <div class="code-line">2FA bypass ready ✓</div>
+                    <div class="code-line">session_token: generating...</div>
+                    <div class="code-line blink">awaiting credentials...</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('loginForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const btn = document.querySelector('.btn-login');
+            const btnText = document.querySelector('.btn-text');
+            const loader = document.getElementById('btnLoader');
+            const status = document.getElementById('loginStatus');
+            
+            // Simulate login
+            btnText.textContent = 'AUTHENTICATING...';
+            loader.style.display = 'block';
+            btn.disabled = true;
+            
+            setTimeout(() => {
+                // Simulate success (for demo)
+                status.innerHTML = '<i class="fas fa-check-circle"></i> Access granted! Redirecting to dashboard...';
+                status.className = 'login-status success';
+                
+                setTimeout(() => {
+                    window.location.href = 'dashboard.html';
+                }, 2000);
+            }, 3000);
+        });
+    </script>
+</body>
+</html>
