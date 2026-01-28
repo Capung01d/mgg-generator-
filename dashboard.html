@@ -16,10 +16,10 @@
     <div class="topbar">
         <div class="topbar-left">
             <i class="fas fa-terminal"></i>
-            <span>MGG TERMINAL v2.1.7</span>
+            <span>MGG TERMINAL v2.2</span>
         </div>
         <div class="topbar-right">
-            <span class="user-status" id="userStatus">user@example.com</span>
+            <span class="user-status" id="userStatus">admin@pentest.local</span>
             <button class="btn-logout" onclick="logout()">
                 <i class="fas fa-power-off"></i> LOGOUT
             </button>
@@ -31,7 +31,7 @@
         <!-- Sidebar -->
         <aside class="sidebar">
             <div class="logo-sidebar">
-                <img src="assets/logo.png" alt="MGG" class="logo-img">
+                <div class="logo-img">MGG</div>
                 <span>MAZKIP</span>
             </div>
             <nav class="sidebar-nav">
@@ -59,71 +59,66 @@
             <!-- Generator Section -->
             <section id="generator" class="dashboard-section active">
                 <div class="section-header">
-                    <h1><i class="fas fa-bolt"></i> GMAIL GENERATOR</h1>
+                    <h1><i class="fas fa-bolt"></i> GMAIL GENERATOR v2.2</h1>
                     <div class="status-indicator online">
                         <span class="status-dot"></span>
-                        ONLINE
+                        LIVE
                     </div>
                 </div>
 
                 <div class="generator-controls">
                     <div class="control-group">
-                        <label>Amount to Generate</label>
+                        <label>Amount (5-1000)</label>
                         <div class="input-wrapper">
-                            <input type="number" id="amount" value="100" min="1" max="10000">
+                            <input type="number" id="amount" value="50" min="5" max="1000">
                             <span>accounts</span>
                         </div>
                     </div>
                     <div class="control-group">
                         <label>Proxy Mode</label>
                         <select id="proxyMode">
-                            <option value="auto">Auto Rotate (Recommended)</option>
-                            <option value="residential">Residential Proxies</option>
+                            <option value="auto">Auto Rotate</option>
+                            <option value="residential">Residential</option>
                             <option value="datacenter">Datacenter</option>
-                            <option value="none">No Proxy</option>
+                            <option value="none">Direct</option>
                         </select>
                     </div>
                     <div class="control-group">
                         <label>Speed</label>
                         <select id="speed">
-                            <option value="slow">Slow (99% Success)</option>
-                            <option value="normal" selected>Normal (95% Success)</option>
-                            <option value="fast">Fast (85% Success)</option>
-                            <option value="turbo">TURBO (70% Success)</option>
+                            <option value="slow">🐌 Slow (98%)</option>
+                            <option value="normal" selected>⚡ Normal (92%)</option>
+                            <option value="fast">🚀 Fast (82%)</option>
+                            <option value="turbo">💥 TURBO (68%)</option>
                         </select>
                     </div>
                 </div>
 
                 <div class="generator-actions">
                     <button class="btn-generate btn-primary btn-glow" onclick="startGeneration()">
-                        <i class="fas fa-play"></i>
-                        START GENERATION
+                        <i class="fas fa-play"></i> START GENERATION
                     </button>
                     <button class="btn-stop btn-secondary" onclick="stopGeneration()" style="display: none;">
-                        <i class="fas fa-stop"></i>
-                        STOP
+                        <i class="fas fa-stop"></i> STOP
                     </button>
                     <button class="btn-export" onclick="exportAccounts()">
-                        <i class="fas fa-download"></i>
-                        EXPORT CSV
+                        <i class="fas fa-download"></i> EXPORT CSV
                     </button>
                 </div>
 
-                <!-- Progress & Live Terminal -->
                 <div class="progress-terminal">
                     <div class="progress-bar">
                         <div class="progress-fill" id="progressFill"></div>
                         <span class="progress-text" id="progressText">0 / 0 (0%)</span>
                     </div>
                     <div class="live-terminal" id="liveTerminal">
-                        <div class="terminal-line">generator@terminal:~$ await init()</div>
-                        <div class="terminal-line">Neural network loaded ✓</div>
-                        <div class="terminal-line">Proxy pool: 127.0.0.1:8080-9999 ✓</div>
-                        <div class="terminal-line blink">Ready. Press START to begin generation...</div>
+                        <div class="terminal-line">MGG v2.2 initialized ✓</div>
+                        <div class="terminal-line">Neural name generator: 10k+ combinations</div>
+                        <div class="terminal-line">Proxy pool: 127.0.0.1:8080-9999 (ROTATING)</div>
+                        <div class="terminal-line blink">Ready! Set amount 5-1000 → START GENERATION</div>
                     </div>
                 </div>
 
-                <!-- Generated Accounts Preview -->
                 <div class="accounts-preview">
                     <h3>Latest Generated <span id="previewCount">0</span></h3>
                     <div class="accounts-table" id="accountsTable">
@@ -136,34 +131,139 @@
                 </div>
             </section>
 
-            <!-- Accounts Section -->
+            <!-- ACCOUNTS Section - LENGKAP! -->
             <section id="accounts" class="dashboard-section">
                 <div class="section-header">
                     <h1><i class="fas fa-list"></i> ACCOUNTS MANAGER</h1>
                     <div class="stats-summary">
                         <span>Total: <strong id="totalAccounts">0</strong></span>
-                        <span>Active: <strong id="activeAccounts">0</strong></span>
+                        <span>Active: <strong id="activeAccounts">1,247</strong></span>
                         <span>Success: <strong id="successAccounts">0</strong></span>
                     </div>
                 </div>
-                <!-- Table akan di-generate via JS -->
+                
+                <div class="accounts-filter">
+                    <input type="text" id="searchAccounts" placeholder="🔍 Search email, username...">
+                    <select id="filterStatus">
+                        <option value="all">All Status</option>
+                        <option value="created">Created</option>
+                        <option value="failed">Failed</option>
+                    </select>
+                    <button class="btn-clear" onclick="clearAccounts()">🗑️ Clear All</button>
+                </div>
+
+                <div class="accounts-table-container">
+                    <table class="accounts-table-full">
+                        <thead>
+                            <tr>
+                                <th>Email</th>
+                                <th>Password</th>
+                                <th>Status</th>
+                                <th>Proxy</th>
+                                <th>Created</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="accountsTableBody">
+                            <!-- Dynamic content -->
+                        </tbody>
+                    </table>
+                </div>
             </section>
 
-            <!-- Settings Section -->
+            <!-- SETTINGS Section - LENGKAP! -->
             <section id="settings" class="dashboard-section">
                 <div class="section-header">
                     <h1><i class="fas fa-cog"></i> SETTINGS</h1>
                 </div>
-                <!-- Settings form -->
+                
+                <div class="settings-grid">
+                    <div class="setting-card">
+                        <h3>Generator Settings</h3>
+                        <div class="setting-item">
+                            <label>Default Amount</label>
+                            <input type="number" value="50" min="5" max="1000">
+                        </div>
+                        <div class="setting-item">
+                            <label>Default Proxy</label>
+                            <select>
+                                <option>Auto Rotate</option>
+                                <option>Residential</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div class="setting-card">
+                        <h3>Proxy Management</h3>
+                        <div class="setting-item">
+                            <label>Proxy List</label>
+                            <textarea rows="6" placeholder="Add proxies (one per line)\n103.187.168.101:80"></textarea>
+                        </div>
+                        <button class="btn-primary">Update Proxies</button>
+                    </div>
+                    
+                    <div class="setting-card">
+                        <h3>Security</h3>
+                        <div class="setting-item">
+                            <label>
+                                <input type="checkbox" checked> Auto-save accounts
+                            </label>
+                        </div>
+                        <div class="setting-item">
+                            <label>
+                                <input type="checkbox"> Enable captcha solver
+                            </label>
+                        </div>
+                        <button class="btn-secondary">Save Settings</button>
+                    </div>
+                </div>
             </section>
 
-            <!-- Stats Section -->
+            <!-- STATS Section - LENGKAP! -->
             <section id="stats" class="dashboard-section">
                 <div class="section-header">
                     <h1><i class="fas fa-chart-line"></i> STATISTICS</h1>
+                    <div class="stats-period">
+                        <button class="btn-period active" data-period="24h">24H</button>
+                        <button class="btn-period" data-period="7d">7D</button>
+                        <button class="btn-period" data-period="30d">30D</button>
+                    </div>
                 </div>
-                <!-- Charts will go here -->
-            </div>
+                
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-number" data-target="1247">0</div>
+                        <div class="stat-label">Total Accounts</div>
+                        <i class="fas fa-users stat-icon"></i>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number" data-target="1184">0</div>
+                        <div class="stat-label">Success Rate</div>
+                        <i class="fas fa-check-circle stat-icon success"></i>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number" data-target="95">0</div>
+                        <div class="stat-label">Avg Success %</div>
+                        <i class="fas fa-chart-line stat-icon"></i>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number" data-target="847">0</div>
+                        <div class="stat-label">Today Generated</div>
+                        <i class="fas fa-bolt stat-icon"></i>
+                    </div>
+                </div>
+
+                <div class="stats-charts">
+                    <div class="chart-container">
+                        <h3>Success Rate Over Time</h3>
+                        <canvas id="successChart" width="400" height="200"></canvas>
+                    </div>
+                    <div class="chart-container">
+                        <h3>Accounts by Status</h3>
+                        <canvas id="statusChart" width="400" height="200"></canvas>
+                    </div>
+                </div>
+            </section>
         </main>
     </div>
 
